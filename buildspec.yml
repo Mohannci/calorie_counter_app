@@ -1,4 +1,11 @@
 version: 0.2
+env:
+  secrets-manager:
+    LOGIN: prod/sonar/x23418613:sonartoken
+    HOST: prod/sonar/x23418613:HOST
+    Organization: prod/sonar/x23418613:Organization
+    Project: prod/sonar/x23418613:Project
+
 phases:
   install:
     runtime-versions:
@@ -21,15 +28,13 @@ phases:
       - pylint calorie_counter/**/*.py || true
       - echo "pre build stage completed - PyLint Completed!!"
 
-    
-
   build:
     commands:
       - echo "Build Stage"
       - echo "Sonar Cloud Started"
-      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
+      - sonar-scanner -Dsonar.login=84c71ec81d715696b454668383531b09f13534fd -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=Mohannci_calorie_counter_app -Dsonar.organization=mohannci || true
       - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=Mohannci_calorie_counter_app >result.json
       - cat result.json
       - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
       - echo "Build stage completed!"
