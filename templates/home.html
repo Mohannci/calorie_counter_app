@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 id="username" style="color: white;" class="text-center mt-4">Hi {{ request.user }}<sub><a style="color: rgb(21, 114, 168); size: 20px;" class="text-center mt-4" href="{% url "logout" %}">(Logout)</a></sub></h1>
+
+
+<div class="container mt-2" >
+  <div class="row">
+    <div class="col-lg-6 col-sm-12 item ">
+      <div class="card item-card card-block" style="background-color: #eae2b7; color: black;">
+        <h5 class="card-title mt-3 mb-3 text-center">Total Calories Consumed Today</h5>
+        <p class="card-text text-center">{{ total_calorie }}</p> 
+    </div>
+    </div>
+    <div class="col-lg-6 col-sm-12 item">
+      <div class="card item-card card-block mt-sm-2 mt-lg-0" style="background-color: #eae2b7; color: black;">
+        <h5 class="card-title  mt-3 mb-3 text-center">Calorie Goal For Today</h5>
+        <p class="card-text text-center">{{ calorie_goal }}</p> 
+  </div>
+    </div>
+  </div>
+  
+</div>
+      <div class="text-center mt-4"  style="border-radius: 20px; color: #fcbf49; background-color: #000814; margin-bottom: 30px;">
+        <div class="card-body">
+          
+          <p class="card-text text-center pt-3" style="font-size:22px; color: black;"> 
+          {% if calorie_goal_status > 0 %}
+      You need  {{ calorie_goal_status }} calories more to reach your goal 
+      {% elif calorie_goal == 0 %}
+      <a style="color: #fcbf49;" href="{% url "profile" %}"> Enter your calorie goal for the day </a>
+      {% else %}
+      <a style="color: #fcbf49;"> You surpassed your goal by {{ over_calorie }} calories  </a>
+      {% endif %} </p>
+
+        </div>
+
+      </div>
+
+<h1 class="text-center mt-auto mb-auto" style="color: #d9d9d9;">All Food Consumed Today </h1>
+<div class="container table-responsive py-5"> 
+<table class="table table-bordered table-hover">
+  <thead class="thead-dark">
+    <tr class="text-center">
+      <th scope="col">Food</th>
+      <th scope="col">Calorie</th>
+      <th scope="col">Count</th>
+    </tr>
+  </thead>
+  <tbody>
+ 
+  
+    {% for food in food_selected_today %}
+    <tr class="text-center">
+      <td> {{ food.food.name }}</td>
+      <td> {{ food.calorie_amount }}</td>
+      <td> {{ food.amount }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+
+{% endblock content %}
