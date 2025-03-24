@@ -21,11 +21,12 @@ SECRET_KEY = '+t7(jevholo1^+3$b2gguvea3lw!hznrg1pl*!$zow#nqb_cum'
 DEBUG = True
 
 ALLOWED_HOSTS = ['x23418613-calorie-project.eba-rpcrtisg.eu-central-1.elasticbeanstalk.com/','*']
-CSRF_TRUSTED_ORIGINS = ['http://x23418613-calorie-project.eba-rpcrtisg.eu-central-1.elasticbeanstalk.com/']
+CSRF_TRUSTED_ORIGINS = [
+    'http://x23418613-calorie-project.eba-rpcrtisg.eu-central-1.elasticbeanstalk.com/'
+    ]
 
 # Application definition
-
-INSTALLED_APPS = [   
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -106,11 +107,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 STATIC_ROOT = "staticfiles/"
-
