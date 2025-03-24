@@ -32,9 +32,9 @@ phases:
     commands:
       - echo "Build Stage"
       - echo "Sonar Cloud Started"
-      - sonar-scanner -Dsonar.login=84c71ec81d715696b454668383531b09f13534fd -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=Mohannci_calorie_counter_app -Dsonar.organization=mohannci || true
+      - sonar-scanner -Dsonar.login=$sonartoken -Dsonar.host.url=$Host -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
       - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=Mohannci_calorie_counter_app >result.json
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
       - cat result.json
       - echo "Build stage completed!"
 

@@ -11,11 +11,11 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
+from django.core.management.utils import get_random_secret_key
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+t7(jevholo1^+3$b2gguvea3lw!hznrg1pl*!$zow#nqb_cum'
+SECRET_KEY = get_random_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
