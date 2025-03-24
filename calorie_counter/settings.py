@@ -20,8 +20,8 @@ SECRET_KEY = '+t7(jevholo1^+3$b2gguvea3lw!hznrg1pl*!$zow#nqb_cum'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['x23418613-calorie-project.eba-rpcrtisg.eu-central-1.elasticbeanstalk.com/','*']
+CSRF_TRUSTED_ORIGINS = ['http://x23418613-calorie-project.eba-rpcrtisg.eu-central-1.elasticbeanstalk.com/']
 
 # Application definition
 
