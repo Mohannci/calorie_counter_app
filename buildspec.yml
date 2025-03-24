@@ -14,7 +14,7 @@ phases:
       - python --version
       - python manage.py collectstatic --noinput
       - echo "PyLint Started"
-      - pylint auction_mania/**/*.py || true
+      - pylint calorie_counter/**/*.py || true
       - echo "pre build stage completed - PyLint Completed!!"
     
 
