@@ -12,38 +12,38 @@ phases:
       python: 3.11
     commands:
       - echo "<-- RUNTIME EXECUTION -->"
-      # - pip install --upgrade pip
-      # - pip install -r requirements.txt pylint
-      # - yum update -y
-      # - yum install -y jq
-      # - sudo yum install -y java-11-openjdk
-      # - java -version  # Check installed Java version
-      # - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
-      # - export PATH=$JAVA_HOME/bin:$PATH
-      # - java -version  # Verify that Java 11 is being used
+      - pip install --upgrade pip
+      - pip install -r requirements.txt pylint
+      - yum update -y
+      - yum install -y jq
+      - sudo yum install -y java-11-openjdk
+      - java -version  # Check installed Java version
+      - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+      - export PATH=$JAVA_HOME/bin:$PATH
+      - java -version  # Verify that Java 11 is being used
  
-      
+
   pre_build:
     commands:
       - echo "PRE-Build stage"
-      # - python --version
-      # - python manage.py collectstatic --noinput
-      # - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-      # - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
-      # - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
-      # - echo "pre build stage completed"
-      # - echo "PyLint Started"
-      # - pylint calorie_counter/**/*.py || true
+      - python --version
+      - python manage.py collectstatic --noinput
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
+      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
+      - echo "pre build stage completed"
+      - echo "PyLint Started"
+      - pylint calorie_counter/**/*.py || true
       - echo "pre build stage completed - PyLint Completed!!"
 
   build:
     commands:
       - echo "Build Stage"
-      # - echo "Sonar Cloud Started"
-      # - sonar-scanner -Dsonar.login=$sonartoken -Dsonar.host.url=$Host -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
-      # - sleep 5
-      # - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
-      # - cat result.json
+      - echo "Sonar Cloud Started"
+      - sonar-scanner -Dsonar.login=$sonartoken -Dsonar.host.url=$Host -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
+      - sleep 5
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
+      - cat result.json
       - echo "Build stage completed!"
 
 artifacts:
