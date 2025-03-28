@@ -44,7 +44,8 @@ phases:
       - echo "Sonar Cloud Started"
       - export SONAR_SCANNER_OPTS="-Djava.home=$JAVA_HOME"
       # Run sonar-scanner with JS/TS exclusions
-      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.exclusions=**/*.js,**/*.ts || true
+      #- sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.exclusions=**/*.js,**/*.ts || true
+      - sonar-scanner -Dsonar.login=$sonartoken -Dsonar.host.url=$Host -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
       - cat result.json
