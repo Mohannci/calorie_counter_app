@@ -41,6 +41,7 @@ def HomePageView(request):
 	'over_calorie' : over_calorie,
 	'food_selected_today':all_food_today
 	}
+	print(context)
 	
 
 	return render(request, 'home.html',context)
@@ -103,6 +104,7 @@ def select_food(request):
 		form = SelectFoodForm(request.user)
 
 	context = {'form':form,'food_items':food_items}
+	print(context)
 	return render(request, 'select_food.html',context)
 
 #for adding new food
@@ -129,7 +131,6 @@ def add_food(request):
 @login_required
 def update_food(request,pk):
 	food_items = Food.objects.filter(person_of=request.user)
-
 	food_item = Food.objects.get(id=pk)
 	form =  AddFoodForm(instance=food_item)
 	if request.method == 'POST':
@@ -139,7 +140,6 @@ def update_food(request,pk):
 			return redirect('profile')
 	myFilter = FoodFilter(request.GET,queryset=food_items)
 	context = {'form':form,'food_items':food_items,'myFilter':myFilter}
-
 	return render(request,'add_food.html',context)
 
 #for deleting food given by the user
@@ -159,7 +159,6 @@ def ProfilePage(request):
 	person = Profile.objects.filter(person_of=request.user).last()
 	food_items = Food.objects.filter(person_of=request.user)
 	form = ProfileForm(instance=person)
-
 	if request.method == 'POST':
 		form = ProfileForm(request.POST,instance=person)
 		if form.is_valid():	
@@ -171,6 +170,6 @@ def ProfilePage(request):
 	#querying all records for the last seven days 
 	some_day_last_week = timezone.now().date() -timedelta(days=7)
 	records=Profile.objects.filter(date__gte=some_day_last_week,date__lt=timezone.now().date(),person_of=request.user)
-
 	context = {'form':form,'food_items':food_items,'records':records}
+	print(context)
 	return render(request, 'profile.html',context)
