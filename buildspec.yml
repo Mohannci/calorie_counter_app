@@ -24,20 +24,37 @@ phases:
       - export PATH=$JAVA_HOME/bin:$PATH
       - java -version  # Verify that Java 11 is being used
 
+  # pre_build:
+  #   commands:
+  #     - echo "PRE-Build stage"
+  #     - java -version
+  #     - python --version
+  #     - python manage.py collectstatic --noinput
+  #     - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+  #     - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
+  #     - rm -rf ./sonar-scanner-4.7.0.2747-linux/jre  # Delete bundled JRE
+  #     - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
+  #     - echo "pre build stage completed"
+  #     - echo "PyLint Started"
+  #     - pylint calorie_counter/**/*.py || true
+  #     - echo "pre build stage completed - PyLint Completed!!"
+
   pre_build:
     commands:
       - echo "PRE-Build stage"
-      - java -version
       - python --version
       - python manage.py collectstatic --noinput
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
       - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
       - rm -rf ./sonar-scanner-4.7.0.2747-linux/jre  # Delete bundled JRE
-      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
+      - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk  # Use Java 17
+      - export PATH=$JAVA_HOME/bin:$PATH
+      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/  # Add SonarScanner to PATH
       - echo "pre build stage completed"
       - echo "PyLint Started"
       - pylint calorie_counter/**/*.py || true
       - echo "pre build stage completed - PyLint Completed!!"
+
 
   build:
     commands:
