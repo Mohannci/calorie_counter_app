@@ -21,7 +21,6 @@ phases:
       - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
       - export PATH=$JAVA_HOME/bin:$PATH
       - java -version  # Verify that Java 11 is being used
- 
 
   pre_build:
     commands:
@@ -40,7 +39,11 @@ phases:
     commands:
       - echo "Build Stage"
       - echo "Sonar Cloud Started"
-      - sonar-scanner -Dsonar.login=$sonartoken -Dsonar.host.url=$Host -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
+      - sonar-scanner \
+          -Dsonar.login=$LOGIN \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.projectKey=$Project \
+          -Dsonar.organization=$Organization || true
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
       - cat result.json
