@@ -16,24 +16,21 @@ phases:
       - pip install -r requirements.txt pylint
       - yum update -y
       - yum install -y jq
-      - sudo yum remove -y java-11-openjdk  # Remove Java 11
-      - sudo yum install -y java-17-amazon-corretto  # Install Java 17
+      - sudo yum install -y java-11-openjdk
       - java -version  # Check installed Java version
-      # Install Node.js (latest LTS version)
-      - curl -sL https://rpm.nodesource.com/setup_20.x | bash -
-      - yum install -y nodejs
-      - node -v  # Verify Node.js version
-      - npm -v  # Verify npm version
+      - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+      - export PATH=$JAVA_HOME/bin:$PATH
+      - java -version  # Verify that Java 11 is being used
+ 
 
   pre_build:
     commands:
       - echo "PRE-Build stage"
       - python --version
       - python manage.py collectstatic --noinput
-      # Download latest SonarScanner CLI
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-      - unzip ./sonar-scanner-cli-5.0.1.3006-linux.zip
-      - export PATH=$PATH:./sonar-scanner-5.0.1.3006-linux/bin/
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
+      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
       - echo "pre build stage completed"
       - echo "PyLint Started"
       - pylint calorie_counter/**/*.py || true
@@ -42,16 +39,10 @@ phases:
   build:
     commands:
       - echo "Build Stage"
-      # Export JAVA_HOME and PATH again to ensure it is used properly
-      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
-      - export PATH=$JAVA_HOME/bin:$PATH
-      - java -version  # Verify that Java 17 is being used
       - echo "Sonar Cloud Started"
-      - export SONAR_SCANNER_OPTS="-Djava.home=$JAVA_HOME"
-      # Correct sonar-scanner command
-      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.exclusions=**/*.js,**/*.ts || true
+      - sonar-scanner -Dsonar.login=$sonartoken -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
       - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
       - cat result.json
       - echo "Build stage completed!"
 
