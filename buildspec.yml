@@ -47,7 +47,7 @@ phases:
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
       - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
       - rm -rf ./sonar-scanner-4.7.0.2747-linux/jre  # Delete bundled JRE
-      - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk  # Use Java 17
+      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64  # Corrected path
       - export PATH=$JAVA_HOME/bin:$PATH
       - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
       - java -version  # Add SonarScanner to PATH
@@ -57,11 +57,13 @@ phases:
       - echo "pre build stage completed - PyLint Completed!!"
 
 
+
   build:
     commands:
       - echo "Build Stage"
       - java -version
       - echo "Sonar Cloud Started"
+      - export SONAR_SCANNER_OPTS="-Djava.home=$JAVA_HOME"
       - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
