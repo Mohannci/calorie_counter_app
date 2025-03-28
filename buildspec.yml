@@ -27,10 +27,12 @@ phases:
   pre_build:
     commands:
       - echo "PRE-Build stage"
+      - java -version
       - python --version
       - python manage.py collectstatic --noinput
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
       - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
+      - rm -rf ./sonar-scanner-4.7.0.2747-linux/jre  # Delete bundled JRE
       - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
       - echo "pre build stage completed"
       - echo "PyLint Started"
