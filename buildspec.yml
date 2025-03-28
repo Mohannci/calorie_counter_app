@@ -19,6 +19,11 @@ phases:
       - sudo yum remove -y java-11-openjdk  # Remove Java 11
       - sudo yum install -y java-17-amazon-corretto  # Install Java 17
       - java -version  # Check installed Java version
+      # Install Node.js (latest LTS version)
+      - curl -sL https://rpm.nodesource.com/setup_20.x | bash -
+      - yum install -y nodejs
+      - node -v  # Verify Node.js version
+      - npm -v  # Verify npm version
 
   pre_build:
     commands:
@@ -43,9 +48,8 @@ phases:
       - java -version  # Verify that Java 17 is being used
       - echo "Sonar Cloud Started"
       - export SONAR_SCANNER_OPTS="-Djava.home=$JAVA_HOME"
-      # Run sonar-scanner with JS/TS exclusions
-      #- sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.exclusions=**/*.js,**/*.ts || true
-      - sonar-scanner -Dsonar.login=$sonartoken -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
+      # Correct sonar-scanner command
+      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.exclusions=**/*.js,**/*.ts || true
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
       - cat result.json
