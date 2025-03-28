@@ -20,7 +20,7 @@ phases:
       - sudo yum install -y java-17-amazon-corretto  # Install Java 17  
       #- sudo yum install -y java-11-openjdk
       - java -version  # Check installed Java version
-      - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
       - export PATH=$JAVA_HOME/bin:$PATH
       - java -version  # Verify that Java 11 is being used
 
