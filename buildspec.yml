@@ -16,12 +16,9 @@ phases:
       - pip install -r requirements.txt pylint
       - yum update -y
       - yum install -y jq
-      - sudo yum remove -y java-11-openjdk # Remove Java 11
+      - sudo yum remove -y java-11-openjdk  # Remove Java 11
       - sudo yum install -y java-17-amazon-corretto  # Install Java 17
       - java -version  # Check installed Java version
-      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
-      - export PATH=$JAVA_HOME/bin:$PATH
-      - java -version  # Verify that Java 17 is being used
 
   pre_build:
     commands:
@@ -40,10 +37,13 @@ phases:
   build:
     commands:
       - echo "Build Stage"
-      - java -version
+      # Export JAVA_HOME and PATH again to ensure it is used properly
+      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
+      - export PATH=$JAVA_HOME/bin:$PATH
+      - java -version  # Verify that Java 17 is being used
       - echo "Sonar Cloud Started"
       - export SONAR_SCANNER_OPTS="-Djava.home=$JAVA_HOME"
-      # Updated sonar-scanner command with JS/TS exclusions
+      # Run sonar-scanner with JS/TS exclusions
       - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.exclusions=**/*.js,**/*.ts || true
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
