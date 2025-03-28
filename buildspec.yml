@@ -64,6 +64,7 @@ phases:
       - java -version
       - echo "Sonar Cloud Started"
       - export SONAR_SCANNER_OPTS="-Djava.home=$JAVA_HOME"
+      - echo "Using JAVA_HOME: $JAVA_HOME"
       - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
