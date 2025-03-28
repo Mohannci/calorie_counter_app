@@ -49,7 +49,8 @@ phases:
       - rm -rf ./sonar-scanner-4.7.0.2747-linux/jre  # Delete bundled JRE
       - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk  # Use Java 17
       - export PATH=$JAVA_HOME/bin:$PATH
-      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/  # Add SonarScanner to PATH
+      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
+      - java -version  # Add SonarScanner to PATH
       - echo "pre build stage completed"
       - echo "PyLint Started"
       - pylint calorie_counter/**/*.py || true
@@ -59,6 +60,7 @@ phases:
   build:
     commands:
       - echo "Build Stage"
+      - java -version
       - echo "Sonar Cloud Started"
       - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
       - sleep 5
