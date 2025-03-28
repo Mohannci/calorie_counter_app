@@ -16,7 +16,9 @@ phases:
       - pip install -r requirements.txt pylint
       - yum update -y
       - yum install -y jq
-      - sudo yum install -y java-11-openjdk
+      - sudo yum remove -y java-11-openjdk # Remove Java 11
+      - sudo yum install -y java-17-amazon-corretto  # Install Java 17  
+      #- sudo yum install -y java-11-openjdk
       - java -version  # Check installed Java version
       - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
       - export PATH=$JAVA_HOME/bin:$PATH
