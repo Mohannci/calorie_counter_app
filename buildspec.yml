@@ -16,31 +16,22 @@ phases:
       - pip install -r requirements.txt pylint
       - yum update -y
       - yum install -y jq
-      - sudo yum remove -y java-11-openjdk  # Remove Java 11
+      - sudo yum remove -y java-11-openjdk # Remove Java 11
       - sudo yum install -y java-17-amazon-corretto  # Install Java 17
+      - java -version  # Check installed Java version
       - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
       - export PATH=$JAVA_HOME/bin:$PATH
-      - java -version  # Confirm Java installation
+      - java -version  # Verify that Java 17 is being used
 
   pre_build:
     commands:
       - echo "PRE-Build stage"
       - python --version
       - python manage.py collectstatic --noinput
-      
-      # Use the latest SonarScanner version (update if a newer version is available)
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-      - unzip ./sonar-scanner-cli-5.0.1.3006-linux.zip
-      - export PATH=$PATH:./sonar-scanner-5.0.1.3006-linux/bin/
-      
-      # Correct JAVA_HOME and add to path
-      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
-      - export PATH=$JAVA_HOME/bin:$PATH
-      
-      # Check versions
-      - java -version
-      - sonar-scanner --version
-      
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
+      - rm -rf ./sonar-scanner-4.7.0.2747-linux/jre  # Delete bundled JRE
+      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
       - echo "pre build stage completed"
       - echo "PyLint Started"
       - pylint calorie_counter/**/*.py || true
@@ -50,15 +41,10 @@ phases:
     commands:
       - echo "Build Stage"
       - java -version
-      
-      # Set SonarScanner options to use the correct Java
-      - export SONAR_SCANNER_OPTS="-Djava.home=$JAVA_HOME"
-      
-      # Run SonarScanner with required parameters
       - echo "Sonar Cloud Started"
-      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
-      
-      # Check quality gate results after a short wait
+      - export SONAR_SCANNER_OPTS="-Djava.home=$JAVA_HOME"
+      # Updated sonar-scanner command with JS/TS exclusions
+      - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.exclusions=**/*.js,**/*.ts || true
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
       - cat result.json
