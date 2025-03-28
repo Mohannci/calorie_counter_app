@@ -25,10 +25,10 @@ phases:
       - echo "PRE-Build stage"
       - python --version
       - python manage.py collectstatic --noinput
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
-      - rm -rf ./sonar-scanner-4.7.0.2747-linux/jre  # Delete bundled JRE
-      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
+      # Download latest SonarScanner CLI
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+      - unzip ./sonar-scanner-cli-5.0.1.3006-linux.zip
+      - export PATH=$PATH:./sonar-scanner-5.0.1.3006-linux/bin/
       - echo "pre build stage completed"
       - echo "PyLint Started"
       - pylint calorie_counter/**/*.py || true
