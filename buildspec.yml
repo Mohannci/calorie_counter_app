@@ -16,57 +16,51 @@ phases:
       - pip install -r requirements.txt pylint
       - yum update -y
       - yum install -y jq
-      - sudo yum remove -y java-11-openjdk # Remove Java 11
-      - sudo yum install -y java-17-amazon-corretto  # Install Java 17  
-      #- sudo yum install -y java-11-openjdk
-      - java -version  # Check installed Java version
+      - sudo yum remove -y java-11-openjdk  # Remove Java 11
+      - sudo yum install -y java-17-amazon-corretto  # Install Java 17
       - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
       - export PATH=$JAVA_HOME/bin:$PATH
-      - java -version  # Verify that Java 11 is being used
-
-  # pre_build:
-  #   commands:
-  #     - echo "PRE-Build stage"
-  #     - java -version
-  #     - python --version
-  #     - python manage.py collectstatic --noinput
-  #     - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-  #     - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
-  #     - rm -rf ./sonar-scanner-4.7.0.2747-linux/jre  # Delete bundled JRE
-  #     - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
-  #     - echo "pre build stage completed"
-  #     - echo "PyLint Started"
-  #     - pylint calorie_counter/**/*.py || true
-  #     - echo "pre build stage completed - PyLint Completed!!"
+      - java -version  # Confirm Java installation
 
   pre_build:
     commands:
       - echo "PRE-Build stage"
       - python --version
       - python manage.py collectstatic --noinput
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-      - unzip ./sonar-scanner-cli-4.7.0.2747-linux.zip
-      - rm -rf ./sonar-scanner-4.7.0.2747-linux/jre  # Delete bundled JRE
-      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64  # Corrected path
+      
+      # Use the latest SonarScanner version (update if a newer version is available)
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+      - unzip ./sonar-scanner-cli-5.0.1.3006-linux.zip
+      - export PATH=$PATH:./sonar-scanner-5.0.1.3006-linux/bin/
+      
+      # Correct JAVA_HOME and add to path
+      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
       - export PATH=$JAVA_HOME/bin:$PATH
-      - export PATH=$PATH:./sonar-scanner-4.7.0.2747-linux/bin/
-      - java -version  # Add SonarScanner to PATH
+      
+      # Check versions
+      - java -version
+      - sonar-scanner --version
+      
       - echo "pre build stage completed"
       - echo "PyLint Started"
       - pylint calorie_counter/**/*.py || true
       - echo "pre build stage completed - PyLint Completed!!"
 
-
-
   build:
     commands:
       - echo "Build Stage"
       - java -version
-      - echo "Sonar Cloud Started"
+      
+      # Set SonarScanner options to use the correct Java
       - export SONAR_SCANNER_OPTS="-Djava.home=$JAVA_HOME"
+      
+      # Run SonarScanner with required parameters
+      - echo "Sonar Cloud Started"
       - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization || true
+      
+      # Check quality gate results after a short wait
       - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project > result.json
       - cat result.json
       - echo "Build stage completed!"
 
