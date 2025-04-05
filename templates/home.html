@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 id="username" style="color: white;" class="text-center mt-4">Hi {{ request.user }}<sub><a style="color: rgb(21, 114, 168); size: 20px;" class="text-center mt-4" href="{% url "logout" %}">(Logout)</a></sub></h1>
+<h1 id="username" style="color: white;" class="text-center mt-4">Hi {{ request.user }}<sub><a style="color: #fca311; size: 20px;" class="text-center mt-4" href="{% url "logout" %}">(Logout)</a></sub></h1>
 
 
 <div class="container mt-2" >

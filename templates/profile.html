@@ -7,14 +7,14 @@
             <div class="col-lg-5 card card-body" style="background-color: #000814;">
             <div class="app-title">
                 
-                <h1 class="text-center mt-2">Name: {{ request.user }} </h1>
+                <h1 class="text-center mt-2" style="color: #d9d9d9;">Name: {{ request.user }} </h1>
 
             </div>
 
             <form method="POST" action="" class="login-form pt-4">
               {% csrf_token %}
                 {% for field in form %}
-                <h1>Calorie Goal For Today</h1>
+                <h1  style="color: #d9d9d9;">Calorie Goal For Today</h1>
                 {{ field }}
                 {% endfor %}
                 <input class="btn login_btn profile-submit ml-3" style="background-color: #fca311" type="submit" value="select">
