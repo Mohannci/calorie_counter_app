@@ -7,14 +7,14 @@
     <div class="login">
         <div class="login-screen"  style="background-color: #000814;">
             <div class="app-title">
-                <h1 class="" style="color: #d9d9d9;">Select Food</h1>
+                <h1 class="" style="color: black;">Select Food</h1>
             </div>
 
             <form method="POST" action="" class="login-form form-inline">
               {% csrf_token %}
               
                 {% for field in form %}
-                <h5 class="form-labels"  style="color: #d9d9d9;">
+                <h5 class="form-labels"  style="color: black;">
                 {{ field.label }}
                 </h5>
                 {{ field }}
@@ -33,13 +33,13 @@
     <div class="login">
         <div class="login-screen"  style="background-color: #000814;">
               <form method="get">
-                  <h1 class="" style="color: #d9d9d9;">{{ myFilter.form }}</h1>
+                  <h1 class="" style="color: black;">{{ myFilter.form }}</h1>
                   <button class="btn mt-2" style="background-color: #fca311" type="submit">Search</button>
               </form> 
         </div>
     </div>
 
-        <h1 class="" style="color: #d9d9d9;"> All Food Items </h1>
+        <h1 class="" style="color: black;"> All Food Items </h1>
         <table class="table table-bordered text-center mt-3">
             <thead class="thead-dark">
                 <tr>
