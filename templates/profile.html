@@ -64,11 +64,11 @@
             <tbody>
                 {% for food in food_items %}
                 <tr>
-                    <td>{{ food.name }}</td>
-                    <td>{{ food.calorie }}</td>
-                    <td>{{ food.quantity }}</td>
-                    <td><a class="btn btn-sm btn-info" href="{% url 'update_food' food.id %}">Update</a></td>
-                    <td><a class="btn btn-sm " href="{% url 'delete_food' food.id %}">Delete</a></td>
+                    <td style="font-weight: 700; color: black;">{{ food.name }}</td>
+                    <td style="font-weight: 700; color: black;">{{ food.calorie }}</td>
+                    <td style="font-weight: 700; color: black;">{{ food.quantity }}</td>
+                    <td style="font-weight: 700; color: black;"><a class="btn btn-sm btn-info" href="{% url 'update_food' food.id %}">Update</a></td>
+                    <td style="font-weight: 700; color: black;"><a class="btn btn-sm " href="{% url 'delete_food' food.id %}">Delete</a></td>
 
                     
                 </tr>
