@@ -7,14 +7,13 @@
     <div class="login">
         <div class="login-screen"  style="background-color: #000814;">
             <div class="app-title">
-                <h1 class="" style="color: black;">Select Food</h1>
+                <h1 class="" style="color: white;">Select Food</h1>
             </div>
-
             <form method="POST" action="" class="login-form form-inline">
               {% csrf_token %}
               
                 {% for field in form %}
-                <h5 class="form-labels"  style="color: black;">
+                <h5 class="form-labels"  style="color: white;">
                 {{ field.label }}
                 </h5>
                 {{ field }}
@@ -33,7 +32,7 @@
     <div class="login">
         <div class="login-screen"  style="background-color: #000814;">
               <form method="get">
-                  <h1 class="" style="color: black;">{{ myFilter.form }}</h1>
+                  <h1 class="" style="color: white;">{{ myFilter.form }}</h1>
                   <button class="btn mt-2" style="background-color: #fca311" type="submit">Search</button>
               </form> 
         </div>
@@ -54,7 +53,6 @@
                     <td style="font-weight: 700; color: black;">{{ food.name }}</td>
                     <td style="font-weight: 700; color: black;">{{ food.calorie }}</td>
                     <td style="font-weight: 700; color: black;">{{ food.quantity }}</td>
-                    
                 </tr>
                 {% endfor %}
             </tbody>

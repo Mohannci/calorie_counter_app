@@ -7,14 +7,14 @@
             <div class="col-lg-5 card card-body" style="background-color: #000814;">
             <div class="app-title">
                 
-                <h1 class="text-center mt-2" style="color: black;">Name: {{ request.user }} </h1>
+                <h1 class="text-center mt-2" style="color: white;">Name: {{ request.user }} </h1>
 
             </div>
 
             <form method="POST" action="" class="login-form pt-4">
               {% csrf_token %}
                 {% for field in form %}
-                <h1  style="color: black;">Calorie Goal For Today</h1>
+                <h1  style="color: white;">Calorie Goal For Today</h1>
                 {{ field }}
                 {% endfor %}
                 <input class="btn login_btn profile-submit ml-3" style="background-color: #fca311" type="submit" value="select">
@@ -68,7 +68,7 @@
                     <td style="font-weight: 700; color: black;">{{ food.calorie }}</td>
                     <td style="font-weight: 700; color: black;">{{ food.quantity }}</td>
                     <td style="font-weight: 700; color: black;"><a class="btn btn-sm btn-info" href="{% url 'update_food' food.id %}">Update</a></td>
-                    <td style="font-weight: 700; color: black;"><a class="btn btn-sm " href="{% url 'delete_food' food.id %}">Delete</a></td>
+                    <td style="font-weight: 700; color: black;"><a class="btn btn-sm btn-danger" href="{% url 'delete_food' food.id %}">Delete</a></td>
 
                     
                 </tr>

@@ -4,12 +4,12 @@
     <div class="login mt-0">
         <div class="login-screen"  style="background-color: #000814;">
             <div class="app-title">
-                <h1 class=""  style="color: black;">Select Food</h1>
+                <h1 class=""  style="color: white;">Select Food</h1>
             </div>
 
             <form method="POST" action="" class="login-form">
               {% csrf_token %}
-              <h5 style="color: black;" class="form-labels">
+              <h5 style="color: white;" class="form-labels">
                 {{ form.as_p }}
             </h5>
                 <input class="btn login_btn pt-2" style="background-color: #fca311" type="submit" value="select">
