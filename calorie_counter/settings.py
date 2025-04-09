@@ -73,7 +73,8 @@ DATABASES = {
     }
 }
 
-
+# Add this line to specify the default primary key type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
