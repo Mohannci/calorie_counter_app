@@ -47,7 +47,7 @@ phases:
       - sonar-scanner -Dsonar.login=$LOGIN -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=$Project -Dsonar.organization=$Organization -Dsonar.coverage.exclusions=**/* || true
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$Project >result.json
-      - cat result.txt
+      - cat result.json
       - echo "Build stage completed!"
 
 artifacts:
